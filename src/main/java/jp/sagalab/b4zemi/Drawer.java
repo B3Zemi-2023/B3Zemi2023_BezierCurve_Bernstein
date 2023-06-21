@@ -66,10 +66,19 @@ public class Drawer extends JPanel {
     /*
       制御点列のリストに制御点が入っている場合は描画を行うような処理を記述する．
      */
-
+    if(m_controlPoints.size() >= 1){
+      for(int n=0; n < m_controlPoints.size();n++ ){
+        drawPoint(m_controlPoints.get(n), Color.RED, _g);
+      }
+    }
     /*
       評価点列のリストに評価点が入っている場合は描画を行うような処理を記述する．
      */
+    if(m_evaluatePoints.size() >= 1){
+      for(int n=0; n < m_evaluatePoints.size()-1;n++ ){
+        drawLine(m_evaluatePoints.get(n), m_evaluatePoints.get(n+1),Color.BLUE, _g);
+      }
+    }
   }
 
   /**
@@ -128,9 +137,14 @@ public class Drawer extends JPanel {
     /*
       ここにBezierCurveのインスタンスを生成し評価点列を求める処理を記述する．
      */
-
+    BezierCurve bezierCurve = BezierCurve.create(m_controlPoints);
+    List<Point> evaluatePoints = new ArrayList<>();
+    for (double n = 0 ; n <= 1 ; n += 0.01){
+      Point i = bezierCurve.evaluate2(n);
+      evaluatePoints.add(i);
+    }
     // 求めた評価点列をm_evaluatePointsに設定します．
-    setEvaluatePoints();
+    setEvaluatePoints(evaluatePoints);
   }
 
   /**
@@ -161,7 +175,14 @@ public class Drawer extends JPanel {
         /*
           ここにマウスをクリックしたときの処理を記述する．
          */
-
+        int x = e.getX();
+        int y = e.getY();
+        Point a =Point.create(x,y);
+        m_controlPoints.add(a);
+        if (m_controlPoints.size() >= 3 ){
+          calculate();
+        }
+        System.out.println(m_controlPoints.size());
         // repaintメソッドを用いてpaintメソッドを呼び出す
         repaint();
       }

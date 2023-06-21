@@ -41,15 +41,15 @@ public final class BezierCurveTest {
     BezierCurve b = BezierCurve.create(Arrays.asList(
             Point.create(-2.0, 0.0), Point.create(-1.0, 0.0), Point.create(0.0, 2.0), Point.create(1.0, 0.0), Point.create(2.0, 0.0)));
 
-    assertEquals(-2.0, b.evaluate(0.0).getX(), 1.0e-10);
-    assertEquals(-1.0, b.evaluate(0.25).getX(), 1.0e-10);
-    assertEquals(0.0, b.evaluate(0.5).getX(), 1.0e-10);
-    assertEquals(1.0, b.evaluate(0.75).getX(), 1.0e-10);
-    assertEquals(2.0, b.evaluate(1.0).getX(), 1.0e-10);
-    assertEquals(0.0, b.evaluate(0.0).getY(), 1.0e-10);
-    assertEquals(27 / 64.0, b.evaluate(0.25).getY(), 1.0e-10);
-    assertEquals(0.75, b.evaluate(0.5).getY(), 1.0e-10);
-    assertEquals(27 / 64.0, b.evaluate(0.75).getY(), 1.0e-10);
-    assertEquals(0.0, b.evaluate(1.0).getY(), 1.0e-10);
+    assertEquals(-2.0, b.evaluate2(0.0).getX(), 1.0e-10);
+    assertEquals(-1.0, b.evaluate2(0.25).getX(), 1.0e-10);
+    assertEquals(0.0, b.evaluate2(0.5).getX(), 1.0e-10);
+    assertEquals(1.0, b.evaluate2(0.75).getX(), 1.0e-10);
+    assertEquals(2.0, b.evaluate2(1.0).getX(), 1.0e-10);
+    assertEquals(0.0, b.evaluate2(0.0).getY(), 1.0e-10);
+    assertEquals(27 / 64.0, b.evaluate2(0.25).getY(), 1.0e-10);
+    assertEquals(0.75, b.evaluate2(0.5).getY(), 1.0e-10);
+    assertEquals(27 / 64.0, b.evaluate2(0.75).getY(), 1.0e-10);
+    assertEquals(0.0, b.evaluate2(1.0).getY(), 1.0e-10);
   }
 }
