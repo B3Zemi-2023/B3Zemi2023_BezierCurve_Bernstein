@@ -9,6 +9,7 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * 描画用のパネルを生成します．
  * @author inagaki
@@ -44,7 +45,7 @@ public class Drawer extends JPanel {
     // ウィンドウを閉じたときにプログラムが終了するように設定します．
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     // JPanelに描画を行うための機能を追加したDrawerのインスタンスを生成します．
-    Drawer drawer = new Drawer();
+    Drawer drawer = new Drawer(frame);
     // 先程生成したウィンドウの中の要素としてDrawerを追加します．
     frame.getContentPane().add(drawer);
     // フレームサイズを最適化します．
@@ -70,6 +71,9 @@ public class Drawer extends JPanel {
       for(int n=0; n < m_controlPoints.size();n++ ){
         drawPoint(m_controlPoints.get(n), Color.RED, _g);
       }
+    }
+    for(int i =0;i<m_controlPoints.size()-1;i++){
+          drawLine(m_controlPoints.get(i),m_controlPoints.get(i+1),Color.black,_g);
     }
     /*
       評価点列のリストに評価点が入っている場合は描画を行うような処理を記述する．
@@ -140,7 +144,7 @@ public class Drawer extends JPanel {
     BezierCurve bezierCurve = BezierCurve.create(m_controlPoints);
     List<Point> evaluatePoints = new ArrayList<>();
     for (double n = 0 ; n <= 1 ; n += 0.01){
-      Point i = bezierCurve.evaluate2(n);
+      Point i = bezierCurve.evaluate(n);
       evaluatePoints.add(i);
     }
     // 求めた評価点列をm_evaluatePointsに設定します．
@@ -158,11 +162,20 @@ public class Drawer extends JPanel {
   /**
    * コンストラクタ
    */
-  private Drawer() {
+  private Drawer(JFrame _frame) {
     // 描画用パネルのサイズを設定します．
     this.setPreferredSize(new Dimension(WIDTH_SIZE, HEIGHT_SIZE));
     // 描画用パネルの背景色を設定します．
     this.setBackground(Color.WHITE);
+    JPanel pMain = new JPanel();
+    JButton bReset = new JButton("Reset");
+    pMain.add(bReset);
+    _frame.setContentPane(pMain);
+    bReset.addActionListener(e -> {
+      m_controlPoints.clear();
+      m_evaluatePoints.clear();
+      repaint();
+    });
     // 描画用パネルにマウス処理を追加します．
     this.addMouseListener(new MouseAdapter() {
       @Override
@@ -179,10 +192,9 @@ public class Drawer extends JPanel {
         int y = e.getY();
         Point a =Point.create(x,y);
         m_controlPoints.add(a);
-        if (m_controlPoints.size() >= 3 ){
-          calculate();
-        }
-        System.out.println(m_controlPoints.size());
+//        if (m_controlPoints.size() >= 3 ){
+//          calculate();
+//        }
         // repaintメソッドを用いてpaintメソッドを呼び出す
         repaint();
       }
