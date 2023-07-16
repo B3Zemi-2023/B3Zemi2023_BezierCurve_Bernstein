@@ -51,6 +51,7 @@ public class BezierCurve {
      */
     public Point evaluate(double _t){
         //Bernstein多項式を用いてBernstein多項式表現の計算処理を記述してください
+        //Point.javaにあるcreateメソッドを使えばポイントのインスタンスを作ることが出来ます。
         return null;
     }
 
