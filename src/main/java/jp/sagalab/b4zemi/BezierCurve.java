@@ -29,8 +29,11 @@ public class BezierCurve {
      * @return 階乗した結果
      */
     public double factorial(double n){
+        if(n == 0) {
+            return 1;
+        }
+        return n * factorial(n -1 );
         //階乗を計算する処理を記述してください
-        return 0;
     }
 
     /**
@@ -40,8 +43,8 @@ public class BezierCurve {
      * @return Bernstein多項式
      */
     public double Bernstein(int _i,double _t){
+        return factorial(m_controlPoints.size() - 1) / (factorial(_i) * factorial(m_controlPoints.size() - 1 - _i)) * Math.pow(_t, _i) * Math.pow((1 - _t), (m_controlPoints.size() - 1 - _i));
         //Bernstein多項式Bの計算する処理を記述してください
-        return 0;
     }
 
     /**
@@ -52,7 +55,13 @@ public class BezierCurve {
     public Point evaluate(double _t){
         //Bernstein多項式を用いてBernstein多項式表現の計算処理を記述してください
         //Point.javaにあるcreateメソッドを使えばポイントのインスタンスを作ることが出来ます。
-        return null;
+        double xx = 0;
+        double yy = 0;
+        for(int i = 0; i <= m_controlPoints.size() - 1; i++){
+            xx += m_controlPoints.get(i).getX() * Bernstein(i, _t);
+            yy += m_controlPoints.get(i).getY() * Bernstein(i, _t);
+        }
+        return Point.create(xx, yy);
     }
 
 }
