@@ -192,9 +192,9 @@ public class Drawer extends JPanel {
         int y = e.getY();
         Point a =Point.create(x,y);
         m_controlPoints.add(a);
-//        if (m_controlPoints.size() >= 3 ){
-//          calculate();
-//        }
+        if (m_controlPoints.size() >= 3 ){
+          calculate();
+        }
         // repaintメソッドを用いてpaintメソッドを呼び出す
         repaint();
       }

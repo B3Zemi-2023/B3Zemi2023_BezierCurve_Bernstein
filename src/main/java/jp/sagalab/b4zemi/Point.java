@@ -44,6 +44,7 @@ public class Point {
         return m_y;
     }
 
+
     /**
      * この点ともう一つの点を t : ( 1 - t ) で内分 ( t < 0 または t > 1 の場合は外分 ) する
      * @param _other もう一つの点
